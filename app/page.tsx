@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, GameCard } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { useAuth } from "@/contexts/auth-context"
@@ -27,11 +27,12 @@ import {
   Truck,
 } from "lucide-react"
 
-export default function HomePage() {
+export default function GamesPage() {
   const { user } = useAuth()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedDifficulty, setSelectedDifficulty] = useState("all")
+
   const allGames = [
     {
       id: "ludo",
@@ -43,7 +44,7 @@ export default function HomePage() {
       category: "Board Game",
       difficulty: "Easy",
       playTime: "15-30 min",
-      isPopular: true,
+      isPopular: false,
       thumbnail: "/ludo.jpeg",
     },
     {
@@ -56,7 +57,7 @@ export default function HomePage() {
       category: "Crash Game",
       difficulty: "Medium",
       playTime: "2-5 min",
-      isPopular: true,
+      isPopular: false,
       thumbnail: "/aviator.png",
     },
     {
@@ -108,9 +109,10 @@ export default function HomePage() {
       category: "Strategy",
       difficulty: "Hard",
       playTime: "5-10 min",
-      isPopular: true,
+      isPopular: false,
       thumbnail: "/mines.jpeg",
     },
+
     {
       id: "balloons",
       name: "Balloons",
@@ -153,16 +155,16 @@ export default function HomePage() {
     {
       id: "jet-x",
       name: "Jet-X",
-      description: "🚀 DEMO: Watch the jet soar and cash out before it crashes! Real-time multipliers up to 100x",
+      description: " DEMO: Watch the jet soar and cash out before it crashes! Real-time multipliers up to 100x",
       players: "Solo",
       rating: 4.9,
       icon: Rocket,
       category: "Crash Game",
       difficulty: "Medium",
       playTime: "1-3 min",
-      isPopular: true,
-      isDemoMode: true,
-      thumbnail:"/jetx.jpeg",
+      isPopular: false,
+      isDemoMode: false,
+      thumbnail: "/jetx.jpeg",
     },
     {
       id: "pushpa",
@@ -203,18 +205,17 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-4 sm:py-8 px-2 sm:px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="font-work-sans font-bold text-3xl md:text-4xl mb-2">Game Dashboard</h1>
-              <p className="text-muted-foreground">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+            <div className="mb-4 sm:mb-0">
+              <h1 className="font-work-sans font-bold text-2xl sm:text-3xl md:text-4xl mb-2">Game Dashboard</h1>
+              <p className="text-muted-foreground text-sm sm:text-base">
                 {user ? `Welcome back, ${user.username}!` : "Choose your next gaming adventure"}
               </p>
             </div>
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden sm:flex items-center space-x-4">
               <Badge variant="secondary" className="px-3 py-1">
                 11 Games Available
               </Badge>
@@ -222,29 +223,28 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* User Stats */}
         {user && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <Card className="glass">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-work-sans font-bold text-primary mb-1">{userStats.gamesPlayed}</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-lg sm:text-2xl font-work-sans font-bold text-primary mb-1">{userStats.gamesPlayed}</div>
                 <div className="text-xs text-muted-foreground">Games Played</div>
               </CardContent>
             </Card>
             <Card className="glass">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-work-sans font-bold text-primary mb-1">{userStats.totalWins}</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-lg sm:text-2xl font-work-sans font-bold text-primary mb-1">{userStats.totalWins}</div>
                 <div className="text-xs text-muted-foreground">Total Wins</div>
               </CardContent>
             </Card>
             <Card className="glass">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-work-sans font-bold text-primary mb-1">{userStats.winRate}%</div>
+              <CardContent className="p-3 sm:p-4 text-center">
+                <div className="text-lg sm:text-2xl font-work-sans font-bold text-primary mb-1">{userStats.winRate}%</div>
                 <div className="text-xs text-muted-foreground">Win Rate</div>
               </CardContent>
             </Card>
             <Card className="glass">
-              <CardContent className="p-4 text-center">
+              <CardContent className="p-3 sm:p-4 text-center">
                 <div className="text-sm font-work-sans font-bold text-primary mb-1">{userStats.favoriteGame}</div>
                 <div className="text-xs text-muted-foreground">Favorite Game</div>
               </CardContent>
@@ -252,21 +252,20 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Search and Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <div className="relative flex-1">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search games..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-input/50"
+              className="pl-10 bg-input/50 w-full"
               suppressHydrationWarning
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-40 bg-input/50" suppressHydrationWarning>
+              <SelectTrigger className="w-full sm:w-40 bg-input/50" suppressHydrationWarning>
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
@@ -279,7 +278,7 @@ export default function HomePage() {
               </SelectContent>
             </Select>
             <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
-              <SelectTrigger className="w-32 bg-input/50" suppressHydrationWarning>
+              <SelectTrigger className="w-full sm:w-32 bg-input/50" suppressHydrationWarning>
                 <SelectValue placeholder="Difficulty" />
               </SelectTrigger>
               <SelectContent className="glass">
@@ -293,67 +292,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Popular Games Section */}
-        {searchQuery === "" && selectedCategory === "all" && selectedDifficulty === "all" && (
-          <div className="mb-8">
-            <div className="flex items-center mb-4">
-              <TrendingUp className="h-5 w-5 text-primary mr-2" />
-              <h2 className="font-work-sans font-semibold text-xl">Popular Games</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {popularGames.map((game) => {
-                const Icon = game.icon
-                return (
-                  <Card key={game.id} className="glass glass-hover group">
-                    <div className="relative">
-                      <img
-                        src={game.thumbnail || "/placeholder.svg"}
-                        alt={game.name}
-                        className="w-full h-32 object-cover rounded-t-lg"
-                      />
-                      <Badge className="absolute top-2 right-2 bg-primary/90">Popular</Badge>
-                      {game.isDemoMode && (
-                        <Badge className="absolute top-2 left-2 bg-green-500/90 text-xs animate-pulse">DEMO</Badge>
-                      )}    
-                    </div>
-                    <CardContent className="p-0">
-                      <div className="flex items-start justify-between mb-3 p-4 pb-0">
-                        <div className="flex items-center space-x-2">
-                          <Icon className="h-5 w-5 text-primary" />
-                          <h3 className="font-work-sans font-semibold">{game.name}</h3>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                          <span className="text-xs font-medium">{game.rating}</span>
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-3 px-4">{game.description}</p>
-                      <div className="flex items-center justify-between p-4 pt-0">
-                        <div className="flex items-center space-x-2">
-                          <Badge variant="outline" className="text-xs">
-                            {game.category}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground">{game.playTime}</span>
-                        </div>
-                        <Button asChild size="sm">
-                          <Link href={`/games/${game.id}`}>
-                            <Play className="h-3 w-3 mr-1" />
-                            Play
-                          </Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* All Games Grid */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-work-sans font-semibold text-xl">
+            <h2 className="font-work-sans font-semibold text-lg sm:text-xl">
               {searchQuery || selectedCategory !== "all" || selectedDifficulty !== "all"
                 ? `Games (${filteredGames.length})`
                 : "All Games"}
@@ -362,14 +303,14 @@ export default function HomePage() {
 
           {filteredGames.length === 0 ? (
             <Card className="glass">
-              <CardContent className="p-8 text-center">
-                <Gamepad2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="font-work-sans font-semibold text-lg mb-2">No games found</h3>
-                <p className="text-muted-foreground">Try adjusting your search or filters</p>
+              <CardContent className="p-6 sm:p-8 text-center">
+                <Gamepad2 className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="font-work-sans font-semibold text-base sm:text-lg mb-2">No games found</h3>
+                <p className="text-muted-foreground text-sm">Try adjusting your search or filters</p>
               </CardContent>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
               {filteredGames.map((game) => {
                 const Icon = game.icon
                 const difficultyColor = {
@@ -379,82 +320,82 @@ export default function HomePage() {
                 }[game.difficulty]
 
                 return (
-                  <Card key={game.id} className="glass glass-hover group">
+                  <GameCard key={game.id}>
                     <div className="relative">
                       <img
                         src={game.thumbnail || "/placeholder.svg"}
                         alt={game.name}
-                        className="w-full h-32 object-cover rounded-t-lg"
+                        className="w-full h-24 sm:h-32 md:h-36 object-cover rounded-t-lg"
                       />
                       {game.isPopular && (
-                        <Badge className="absolute top-2 right-2 bg-primary/90 text-xs">Popular</Badge>
+                        <Badge className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-primary/90 text-xs">Popular</Badge>
                       )}
                       {game.isDemoMode && (
-                        <Badge className="absolute top-2 left-2 bg-green-500/90 text-xs animate-pulse">DEMO</Badge>
+                        <Badge className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-green-500/90 text-xs animate-pulse">DEMO</Badge>
                       )}
                     </div>
-                    <CardContent className="p-0">
-                      <div className="flex items-start justify-between mb-3 p-4 pb-0">
-                        <div className="flex items-center space-x-2">
-                          <Icon className="h-4 w-4 text-primary" />
-                          <h3 className="font-work-sans font-semibold text-sm">{game.name}</h3>
+                    <CardContent className="p-2 sm:p-3 md:p-4">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center space-x-1 min-w-0 flex-1">
+                          <Icon className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                          <h3 className="font-work-sans font-semibold text-xs sm:text-sm truncate">{game.name}</h3>
                         </div>
-                        <div className="flex items-center space-x-1">
-                          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        <div className="flex items-center space-x-1 flex-shrink-0">
+                          <Star className="h-2 w-2 sm:h-3 sm:w-3 fill-yellow-400 text-yellow-400" />
                           <span className="text-xs font-medium">{game.rating}</span>
                         </div>
                       </div>
 
-                      <p className="text-xs text-muted-foreground mb-3 line-clamp-2 px-4">{game.description}</p>
+                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2 hidden sm:block">{game.description}</p>
 
-                      <div className="flex items-center justify-between mb-3 px-4">
-                        <Badge variant="outline" className="text-xs">
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge variant="outline" className="text-xs px-1 sm:px-2 truncate">
                           {game.category}
                         </Badge>
                         <span className={`text-xs font-medium ${difficultyColor}`}>{game.difficulty}</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 pt-0">
-                        <div className="text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3 inline mr-1" />
-                          {game.playTime}
+                      <div className="flex items-center justify-between">
+                        <div className="text-xs text-muted-foreground flex items-center">
+                          <Clock className="h-2 w-2 sm:h-3 sm:w-3 inline mr-1" />
+                          <span className="hidden sm:inline">{game.playTime}</span>
+                          <span className="sm:hidden">{game.playTime.split(' ')[0]}</span>
                         </div>
-                        <Button asChild size="sm" variant="ghost" className="h-7 px-2">
+                        <Button asChild size="sm" variant="ghost" className="h-6 sm:h-7 px-1 sm:px-2">
                           <Link href={`/games/${game.id}`}>
-                            <Play className="h-3 w-3" />
+                            <Play className="h-2 w-2 sm:h-3 sm:w-3" />
                           </Link>
                         </Button>
                       </div>
                     </CardContent>
-                  </Card>
+                  </GameCard>
                 )
               })}
             </div>
           )}
         </div>
 
-        {/* Recently Played (for logged in users) */}
         {user && searchQuery === "" && selectedCategory === "all" && selectedDifficulty === "all" && (
           <div>
             <div className="flex items-center mb-4">
-              <Clock className="h-5 w-5 text-primary mr-2" />
-              <h2 className="font-work-sans font-semibold text-xl">Recently Played</h2>
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary mr-2" />
+              <h2 className="font-work-sans font-semibold text-lg sm:text-xl">Recently Played</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               {recentlyPlayed.map((game) => {
                 const Icon = game.icon
                 return (
                   <Card key={game.id} className="glass glass-hover">
-                    <CardContent className="p-4">
+                    <CardContent className="p-3 sm:p-4">
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                          <Icon className="h-5 w-5 text-white" />
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                         </div>
-                        <div className="flex-1">
-                          <h3 className="font-work-sans font-semibold text-sm">{game.name}</h3>
-                          <p className="text-xs text-muted-foreground">{game.category}</p>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-work-sans font-semibold text-sm truncate">{game.name}</h3>
+                          <p className="text-xs text-muted-foreground truncate">{game.category}</p>
                         </div>
-                        <Button asChild size="sm" variant="ghost">
+                        <Button asChild size="sm" variant="ghost" className="flex-shrink-0">
                           <Link href={`/games/${game.id}`}>
                             <Play className="h-3 w-3" />
                           </Link>
